@@ -2,21 +2,27 @@ import sqlalchemy as sq
 from sqlalchemy.orm import sessionmaker
 import config
 import psycopg2
+import json
+from models import create_tables, Publisher, Book, Sale, Shop, Stock
 
 DSN = config.dsn_str
-from models import create_tables
-
 
 engine = sq.create_engine(DSN)
 create_tables(engine)
-# delete_tables(engine)
 
+Session = sessionmaker(bind=engine)
+session = Session()
 
-# Session = sessionmaker(bind=engine)
+with open('tests_data.json', 'r') as fd:
+    data = json.load(fd)
 
-# session = Session()
-# session.add(course1)
-# session.commit()
-# print(course1)
-
-
+for record in data:
+    model = {
+        'publisher': Publisher,
+        'shop': Shop,
+        'book': Book,
+        'stock': Stock,
+        'sale': Sale,
+    }[record.get('model')]
+    session.add(model(id=record.get('pk'), **record.get('fields')))
+session.commit()

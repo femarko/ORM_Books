@@ -6,3 +6,4 @@ include/
 Lib/
 Scripts/
 .idea/
+tests_data.json

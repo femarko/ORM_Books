@@ -23,8 +23,8 @@ class Shop(Base):
 class Stock(Base):
     __tablename__ = 'stock'
     id = sq.Column(sq.Integer, primary_key=True)
-    id_book = sq.Column(sq.Integer, sq.ForeignKey('book.id'), nullable=False)
     id_shop = sq.Column(sq.Integer, sq.ForeignKey('shop.id'), nullable=False)
+    id_book = sq.Column(sq.Integer, sq.ForeignKey('book.id'), nullable=False)
     count = sq.Column(sq.Integer, sq.CheckConstraint('count>0'), nullable=True)
 
 class Sale(Base):
@@ -32,6 +32,7 @@ class Sale(Base):
     id = sq.Column(sq.Integer, primary_key=True)
     price = sq.Column(sq.Float, sq.CheckConstraint('price>=0'))
     date_sale = sq.Column(sq.DateTime, nullable=False)
+    count = sq.Column(sq.Integer, sq.CheckConstraint('count>0'), nullable=True)
     id_stock = sq.Column(sq.Integer, sq.ForeignKey('stock.id'), nullable=False)
 
 def create_tables(engine):
