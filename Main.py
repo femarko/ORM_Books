@@ -4,7 +4,7 @@ import config
 import psycopg2
 
 DSN = config.dsn_str
-from models import create_tables, Course
+from models import create_tables
 
 
 engine = sq.create_engine(DSN)

@@ -1,6 +1,6 @@
 import sqlalchemy as sq
 from sqlalchemy.orm import declarative_base, relationship
-# from sqlalchemy.ext.declarative import declarative_base
+
 Base = declarative_base()
 
 class Publisher(Base):
@@ -25,7 +25,14 @@ class Stock(Base):
     id = sq.Column(sq.Integer, primary_key=True)
     id_book = sq.Column(sq.Integer, sq.ForeignKey('book.id'), nullable=False)
     id_shop = sq.Column(sq.Integer, sq.ForeignKey('shop.id'), nullable=False)
-    count = sq.Column(sq.Integer, nullable=True)
+    count = sq.Column(sq.Integer, sq.CheckConstraint('count>0'), nullable=True)
+
+class Sale(Base):
+    __tablename__ = 'sale'
+    id = sq.Column(sq.Integer, primary_key=True)
+    price = sq.Column(sq.Float, sq.CheckConstraint('sale>=0'))
+    date_sale = sq.Column(sq.DateTime, nullable=False)
+    id_stock = sq.Column(sq.Integer, sq.ForeignKey('stock.id'), nullable=False)
 
 def create_tables(engine):
     Base.metadata.drop_all(engine)
