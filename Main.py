@@ -13,6 +13,9 @@ create_tables(engine)
 Session = sessionmaker(bind=engine)
 session = Session()
 
+# for c in session.query(Sale).join(Stoc):
+#     print(c)
+
 with open('tests_data.json', 'r') as fd:
     data = json.load(fd)
 
