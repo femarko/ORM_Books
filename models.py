@@ -34,7 +34,7 @@ class Sale(Base):
     date_sale = sq.Column(sq.Date, nullable=False)
     count = sq.Column(sq.Integer, sq.CheckConstraint('count>0'), nullable=True)
     id_stock = sq.Column(sq.Integer, sq.ForeignKey('stock.id'), nullable=False)
-    stock = relationship(Stock, backref='sales')
+    stock = relationship(Stock, backref='sale')
 
     def __str__(self):
         return f'{self.id} | {self.price} | {self.date_sale} | {self.count} | {self.id_stock}'
