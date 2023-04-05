@@ -16,8 +16,8 @@ class Book(Base):
     title = sq.Column(sq.String(length=48), unique=True)
     id_publisher = sq.Column(sq.Integer, sq.ForeignKey('publisher.id'), nullable=False)
     publisher = relationship(Publisher, backref='book')
-    def __str__(self):
-        return f'{self.title}'
+    # def __str__(self):
+    #     return f'{self.title}'
 
 class Shop(Base):
     __tablename__ = 'shop'
