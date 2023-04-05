@@ -16,6 +16,7 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 # if requested_publisher ==
-shop_sample = session.query(Shop.name).join(Stock.shop).join(Sale).subquery()
+shop_sample = session.query(Shop.name, Stock.id_book).join(Stock.shop).join(Sale).subquery()
     # print(c)
-print(session.query(Book.title, Publisher.name).join(Publisher.book).filter(Publisher.name == 'Пушкин').join(shop_sample, Book.id == shop_sample.c.id_book)
+for res in session.query(Book.title, Publisher.name, Shop.name).join(Publisher).join(shop_sample, Book.id == shop_sample.c.id_book):
+    print(res)
