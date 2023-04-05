@@ -15,8 +15,19 @@ engine = sq.create_engine(DSN)
 Session = sessionmaker(bind=engine)
 session = Session()
 
-# if requested_publisher ==
-shop_sample = session.query(Shop.name, Stock.id_book).join(Stock.shop).join(Sale).subquery()
-    # print(c)
-for res in session.query(Book.title, Publisher.name, Shop.name).join(Publisher).join(shop_sample, Book.id == shop_sample.c.id_book):
+# Объединение слева- направо
+# shop_sample = session.query(Shop.name, Stock.id_book).join(Stock.shop).join(Sale).subquery()
+#     # print(c)
+# for res in session.query(Book.title, Publisher.name, Shop.name).join(Publisher).join(shop_sample, Book.id == shop_sample.c.id_book):
+#     print(res)
+
+# Объединение справа-налево
+subq = session.query(Shop.name, Stock.id).select_from(Shop).join(Stock).join(Sale).subquery()
+main_query = session.query(Book.title, Shop.name).select_from(Sale).\
+    join(Stock).join(Book).join(Publisher).join(subq, Sale.id_stock == Stock.id)
+
+for res in main_query:
     print(res)
+
+print(subq)
+print(main_query)
