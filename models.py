@@ -7,8 +7,6 @@ class Publisher(Base):
     __tablename__ = 'publisher'
     id = sq.Column(sq.Integer, primary_key=True)
     name = sq.Column(sq.String(length=48), unique=True)
-    def __str__(self):
-        return f'{self.name}'
 
 class Book(Base):
     __tablename__ = 'book'
@@ -16,14 +14,11 @@ class Book(Base):
     title = sq.Column(sq.String(length=48), unique=True)
     id_publisher = sq.Column(sq.Integer, sq.ForeignKey('publisher.id'), nullable=False)
     publisher = relationship(Publisher, backref='book')
-    # def __str__(self):
-    #     return f'{self.title}'
 
 class Shop(Base):
     __tablename__ = 'shop'
     id = sq.Column(sq.Integer, primary_key=True)
     name = sq.Column(sq.String(length=48), unique=True)
-    # shop_stock = relationship('Stock', backref='shop')
 
 class Stock(Base):
     __tablename__ = 'stock'
@@ -43,10 +38,6 @@ class Sale(Base):
     id_stock = sq.Column(sq.Integer, sq.ForeignKey('stock.id'), nullable=False)
     stock = relationship(Stock, backref='sale')
 
-    def __str__(self):
-        return f'{self.id} | {self.price} | {self.date_sale} | {self.count} | {self.id_stock}'
-
 def create_tables(engine):
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
-
