@@ -4,6 +4,7 @@ import config
 import psycopg2
 from models import create_tables, Publisher, Book, Sale, Shop, Stock
 
+
 DSN = config.dsn_str
 engine = sq.create_engine(DSN)
 
